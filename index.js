@@ -20,15 +20,16 @@ const addNewUser = (mongoId, socketId) => {
 
 io.on("connection", (socket) => {
   console.log("some one has connected");
-
+  // addNewUser(mongoId, socket.id);
   socket.on("newUser", (mongoId) => {
     console.log(mongoId, socket.id);
     addNewUser(mongoId, socket.id);
   });
   // sendNotification
   socket.on("sendNotification", ({ senderId, receiverId, data }) => {
-    // console.log(candidateSockets[receiverId]);
-    console.log(candidateSockets[receiverId]);
+    // console.log(candidateSockets[receiverId], receiverId);
+    console.log(candidateSockets);
+    console.log(receiverId);
 
     io.to(candidateSockets[receiverId]).emit("getNotification", {
       senderId,
@@ -37,8 +38,7 @@ io.on("connection", (socket) => {
   });
   // send message
   socket.on("sendMessage", ({ senderId, receiverId, data }) => {
-    // console.log(candidateSockets[receiverId]);
-    console.log(candidateSockets[receiverId]);
+    console.log(candidateSockets);
 
     io.to(candidateSockets[receiverId]).emit("getMessage", {
       senderId,
